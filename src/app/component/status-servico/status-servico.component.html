@@ -1,0 +1,4 @@
+<i *ngIf="statusServico?.statusServico == 'Online'" class="pi pi-check-circle status-online"></i>
+<i *ngIf="statusServico?.statusServico == 'Alert'" class="pi-minus-circle status-alert"></i>
+<i *ngIf="statusServico?.statusServico == 'Offline'" class="pi pi-times-circle status-offline" style="color: red"></i>
+<i *ngIf="!statusServico?.statusServico" class="pi pi-ellipsis-h no-status"></i>

@@ -1,0 +1,64 @@
+<div class="container" style="padding: 30px;">
+  <p-tabView>
+    <p-tabPanel header="Status por estado (Autorizador)">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="ui-inputgroup">
+            <label>Autorizador</label>
+            <p-dropdown [style]="{'width':'100%'}"
+                        [options]="autorizadorList"
+                        [(ngModel)]="selectedIdAutorizador"
+                        optionLabel="descricaoAutorizador"
+                        optionValue="idAutorizador"
+                        (onChange)="filter()"></p-dropdown>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="ui-inputgroup">
+            <label>Data</label>
+            <p-calendar [style]="{'width':'100%'}"
+                        [(ngModel)]="selectedData"
+                        dateFormat="dd/mm/yy"
+                        (ngModelChange)="filter()"></p-calendar>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="loadingData" class="d-flex justify-content-center" style="padding: 20px">
+        <div class="spinner-border spinner-border-lg text-info" style="height: 100px; width: 100px;"></div>
+      </div>
+      <p-table  *ngIf="!loadingData"  [value]="statusServicoHistoricoList" responsiveLayout="scroll" [style]="{'padding-top':'8px', 'text-align': 'center'}" >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Autorizador</th>
+            <th>Data/Hora</th>
+            <th>Autorização4</th>
+            <th>Retorno Autorização4</th>
+            <th>Inutilização4</th>
+            <th>Consulta Protocolo4</th>
+            <th>Status Serviço4</th>
+            <th>Consulta Cadastro4</th>
+            <th>Recepção Evento4</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-statusServicoHistorico>
+          <tr>
+            <td>{{statusServicoHistorico.autorizador.descricaoAutorizador}}</td>
+            <td>{{statusServicoHistorico.dataStatus}} {{statusServicoHistorico.horaStatus}}</td>
+            <td style="text-align: center"><app-status-servico [statusServico]="statusServicoHistorico.autorizacao"></app-status-servico></td>
+            <td style="text-align: center"><app-status-servico [statusServico]="statusServicoHistorico.retornoAutorizacao"></app-status-servico></td>
+            <td style="text-align: center"><app-status-servico [statusServico]="statusServicoHistorico.inutilizacao"></app-status-servico></td>
+            <td style="text-align: center"><app-status-servico [statusServico]="statusServicoHistorico.consultaProtocolo"></app-status-servico></td>
+            <td style="text-align: center"><app-status-servico [statusServico]="statusServicoHistorico.statusServico"></app-status-servico></td>
+            <td style="text-align: center"><app-status-servico [statusServico]="statusServicoHistorico.consultaCadastro"></app-status-servico></td>
+            <td style="text-align: center"><app-status-servico [statusServico]="statusServicoHistorico.recepecaoEvento"></app-status-servico></td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+    <p-tabPanel header="Ranking de Indisponibilidade">
+      <div class="card">
+        <p-chart type="bar" [data]="chartData"></p-chart>
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+</div>
